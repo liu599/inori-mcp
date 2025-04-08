@@ -14,6 +14,16 @@ type LLMClient struct {
 
 // NewLLMClient 创建新的LLM客户端
 func NewLLMClient(baseURL, apiKey string) *LLMClient {
+	// 如果 baseURL 和 apiKey 都为空，尝试从配置文件加载
+	if baseURL == "" && apiKey == "" {
+		config, err := LoadConfig("config.prod.yaml")
+		if err != nil {
+			fmt.Println("请确保config.yaml已重命名为config.prod.yaml")
+		} else {
+			baseURL, apiKey = config.GetLLMConfig()
+		}
+	}
+
 	config := openai.DefaultConfig(apiKey)
 	if baseURL != "" {
 		config.BaseURL = baseURL
@@ -29,7 +39,7 @@ func (c *LLMClient) GenerateText(ctx context.Context, prompt string) (string, er
 	resp, err := c.Client.CreateChatCompletion(
 		ctx,
 		openai.ChatCompletionRequest{
-			Model: openai.GPT3Dot5Turbo,
+			Model: "deepseek-r1",
 			Messages: []openai.ChatCompletionMessage{
 				{
 					Role:    openai.ChatMessageRoleUser,
@@ -44,4 +54,4 @@ func (c *LLMClient) GenerateText(ctx context.Context, prompt string) (string, er
 	}
 
 	return resp.Choices[0].Message.Content, nil
-} 
+}
