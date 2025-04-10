@@ -9,13 +9,6 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 )
 
-var llmClient *InoriMCP.LLMClient
-
-// InitLLMClient 初始化LLM客户端
-func InitLLMClient(baseURL, apiKey string) {
-	llmClient = InoriMCP.NewLLMClient(baseURL, apiKey)
-}
-
 // HelloWorld 处理函数
 func helloWorldHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 	name, ok := request.Params.Arguments["name"].(string)
@@ -23,18 +16,9 @@ func helloWorldHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.C
 		return nil, errors.New("name must be a string")
 	}
 
-	if llmClient == nil {
-		return nil, errors.New("LLM客户端未初始化")
-	}
-
-	// 使用 LLM 生成问候语
 	prompt := fmt.Sprintf("请用创意的方式向%s说Hello", name)
-	response, err := llmClient.GenerateText(ctx, prompt)
-	if err != nil {
-		return nil, fmt.Errorf("LLM生成失败: %v", err)
-	}
 
-	return mcp.NewToolResultText(response), nil
+	return mcp.NewToolResultText(prompt), nil
 }
 
 var HelloWorld = InoriMCP.MustTool(
