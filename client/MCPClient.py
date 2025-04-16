@@ -48,9 +48,15 @@ class MCPClient:
         """
         连接到 MCP 服务器
         """
+#         server_params = StdioServerParameters(
+#             command='python',
+#             args=['MCPServer_book_search.py'],
+#             env=None
+#         )
+
         server_params = StdioServerParameters(
-            command='python',
-            args=['MCPServer_book_search.py'],
+            command='D:\\Project\\inori-mcp-cluster\\inori-mcp.exe',
+            args=[],
             env=None
         )
 
