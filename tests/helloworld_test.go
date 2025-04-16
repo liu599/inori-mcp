@@ -57,7 +57,7 @@ func TestHelloWorld(t *testing.T) {
 			}
 
 			// 调用处理函数
-			result, err := tools.HelloWorld.Handler(ctx, request)
+			result, err := tools.BookSearchTool.Handler(ctx, request)
 
 			// 验证结果
 			if tt.expectedError {
@@ -77,11 +77,11 @@ func TestHelloWorldRegistration(t *testing.T) {
 	mcpServer := server.NewMCPServer(":8080", nil)
 
 	// 注册工具
-	tools.AddHelloWorldTools(mcpServer)
+	tools.AddBookSearchTools(mcpServer)
 
 	// 验证工具是否已注册
 	tools := mcpServer.GetTools()
 	assert.NotEmpty(t, tools)
 	assert.Equal(t, "hello_world", tools[0].Name)
 	assert.Equal(t, "使用大模型生成创意问候语", tools[0].Description)
-} 
+}

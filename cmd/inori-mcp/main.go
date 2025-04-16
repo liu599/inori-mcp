@@ -16,7 +16,7 @@ func newServer() *server.MCPServer {
 		"mcp-inori-server",
 		"0.0.1",
 	)
-	tools.AddHelloWorldTools(s)
+	tools.AddBookSearchTools(s)
 	return s
 }
 
