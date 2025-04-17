@@ -11,3 +11,7 @@
 ### Client
 
 - `python client/client.py`
+
+### Debugging
+
+- `npx -y @modelcontextprotocol/inspector .\inori-mcp.exe`
